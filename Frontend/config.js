@@ -1,5 +1,5 @@
 // Global API Configuration
-window.ascensus_API_BASE = 'http://localhost:5000';
+window.ascensus_API_BASE = 'https://anony-sandy.vercel.app';
 
 // Global App Settings
 window.APP_CONFIG = {
